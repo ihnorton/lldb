@@ -2431,6 +2431,9 @@ ObjectFileELF::RelocateSection(Symtab* symtab, const ELFHeader *hdr, const ELFSe
     reloc_info_fn reloc_type;
     reloc_info_fn reloc_symbol;
 
+    // This only works if we're modifying the underlying cached data
+    assert(debug_data.GetSharedDataBuffer() == m_data.GetSharedDataBuffer());
+
     if (hdr->Is32Bit())
     {
         reloc_type = ELFRelocation::RelocType32;
@@ -2466,7 +2469,9 @@ ObjectFileELF::RelocateSection(Symtab* symtab, const ELFHeader *hdr, const ELFSe
                 {
                     addr_t value = symbol->GetAddressRef().GetFileAddress();
                     DataBufferSP& data_buffer_sp = debug_data.GetSharedDataBuffer();
-                    uint64_t* dst = reinterpret_cast<uint64_t*>(data_buffer_sp->GetBytes() + rel_section->GetFileOffset() + ELFRelocation::RelocOffset64(rel));
+                    int64_t offset = ELFRelocation::RelocOffset64(rel);
+                    assert(0 <= offset && offset < data_buffer_sp->GetByteSize());
+                    uint64_t* dst = reinterpret_cast<uint64_t*>(data_buffer_sp->GetBytes() + debug_data.GetSharedDataOffset() + offset);
                     *dst = value + ELFRelocation::RelocAddend64(rel);
                 }
                 break;
@@ -2484,7 +2489,9 @@ ObjectFileELF::RelocateSection(Symtab* symtab, const ELFHeader *hdr, const ELFSe
                             ((int64_t)value <= INT32_MAX && (int64_t)value >= INT32_MIN)));
                     uint32_t truncated_addr = (value & 0xFFFFFFFF);
                     DataBufferSP& data_buffer_sp = debug_data.GetSharedDataBuffer();
-                    uint32_t* dst = reinterpret_cast<uint32_t*>(data_buffer_sp->GetBytes() + rel_section->GetFileOffset() + ELFRelocation::RelocOffset32(rel));
+                    int32_t offset = ELFRelocation::RelocOffset32(rel);
+                    assert(0 <= offset && offset < data_buffer_sp->GetByteSize());
+                    uint32_t* dst = reinterpret_cast<uint32_t*>(data_buffer_sp->GetBytes() + debug_data.GetSharedDataOffset() + offset);
                     *dst = truncated_addr;
                 }
                 break;
@@ -2502,6 +2509,7 @@ ObjectFileELF::RelocateSection(Symtab* symtab, const ELFHeader *hdr, const ELFSe
 unsigned
 ObjectFileELF::RelocateDebugSections(const ELFSectionHeader *rel_hdr, user_id_t rel_id)
 {
+    Log *log(lldb_private::GetLogIfAllCategoriesSet (LIBLLDB_LOG_MODULES));
     assert(rel_hdr->sh_type == SHT_RELA || rel_hdr->sh_type == SHT_REL);
 
     // Parse in the section list if needed.
@@ -2541,6 +2549,8 @@ ObjectFileELF::RelocateDebugSections(const ELFSectionHeader *rel_hdr, user_id_t 
         ReadSectionData(symtab, symtab_data) &&
         ReadSectionData(debug, debug_data))
     {
+        if (log)
+            log->Printf("Relocating debug section %s",debug->GetName().GetCString());
         RelocateSection(m_symtab_ap.get(), &m_header, rel_hdr, symtab_hdr, debug_hdr,
                         rel_data, symtab_data, debug_data, debug);
     }
