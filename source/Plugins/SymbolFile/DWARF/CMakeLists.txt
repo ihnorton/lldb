@@ -2,6 +2,8 @@ set(LLVM_NO_RTTI 1)
 
 add_lldb_library(lldbPluginSymbolFileDWARF
   DWARFAbbreviationDeclaration.cpp
+  DWARFASTParserClang.cpp
+  DWARFAttribute.cpp
   DWARFCompileUnit.cpp
   DWARFDataExtractor.cpp
   DWARFDebugAbbrev.cpp
@@ -17,6 +19,7 @@ add_lldb_library(lldbPluginSymbolFileDWARF
   DWARFDebugRanges.cpp
   DWARFDeclContext.cpp
   DWARFDefines.cpp
+  DWARFDIE.cpp
   DWARFDIECollection.cpp
   DWARFFormValue.cpp
   DWARFLocationDescription.cpp
