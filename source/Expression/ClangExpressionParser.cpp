@@ -525,7 +525,7 @@ ClangExpressionParser::PrepareForExecution (lldb::addr_t &func_addr,
             log->Printf("Found function %s for %s", function_name.AsCString(), m_expr.FunctionName());
     }
 
-    execution_unit_sp.reset(new IRExecutionUnit (m_llvm_context, // handed off here
+    execution_unit_sp.reset(new IRExecutionUnit (std::shared_ptr<LLVMContext>{m_llvm_context.release()}, // handed off here
                                                  llvm_module_ap, // handed off here
                                                  function_name,
                                                  exe_ctx.GetTargetSP(),

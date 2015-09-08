@@ -31,7 +31,7 @@ using namespace lldb_private;
 ThreadPlanCallFunctionUsingABI::ThreadPlanCallFunctionUsingABI (Thread &thread,
                                                           const Address &function,
                                                           llvm::Type &prototype,
-                                                          llvm::Type &return_type,
+                                                          llvm::Type *return_type,
                                                           llvm::ArrayRef<ABI::CallArgument> args,
                                                           const EvaluateExpressionOptions &options) :
      ThreadPlanCallFunction(thread,function,options),
@@ -56,6 +56,37 @@ ThreadPlanCallFunctionUsingABI::ThreadPlanCallFunctionUsingABI (Thread &thread,
 
     m_valid = true;
 }
+
+ThreadPlanCallFunctionUsingABI::ThreadPlanCallFunctionUsingABI (Thread &thread,
+                             const Address &function_address,
+                             llvm::Type &function_prototype,
+                             CompilerType return_type,
+                             llvm::ArrayRef<ABI::CallArgument> args,
+                             const EvaluateExpressionOptions &options) :
+     ThreadPlanCallFunction(thread,function_address,options),
+     m_return_type(nullptr),
+     m_clang_return_type(return_type)
+{
+    lldb::addr_t start_load_addr = LLDB_INVALID_ADDRESS;
+    lldb::addr_t function_load_addr = LLDB_INVALID_ADDRESS;
+    ABI *abi = nullptr;
+
+    if (!ConstructorSetup(thread, abi, start_load_addr, function_load_addr))
+        return;
+
+    if (!abi->PrepareTrivialCall(thread,
+        m_function_sp,
+        function_load_addr,
+        start_load_addr,
+        function_prototype,
+        args))
+        return;
+
+    ReportRegisterState("ABI Function call was set up.  Register state was:");
+
+    m_valid = true;
+}
+
 
 ThreadPlanCallFunctionUsingABI::~ThreadPlanCallFunctionUsingABI()
 {
@@ -86,6 +117,11 @@ ThreadPlanCallFunctionUsingABI::SetReturnValue()
     if (abi)
     {
         const bool persistent = false;
-        m_return_valobj_sp = abi->GetReturnValueObject(m_thread, m_return_type, persistent);
+        if (m_clang_return_type.IsValid())
+            m_return_valobj_sp = abi->GetReturnValueObject(m_thread, m_clang_return_type, persistent);
+        else if(m_return_type != NULL)
+            m_return_valobj_sp = abi->GetReturnValueObject(m_thread, *m_return_type, persistent);
+        else
+            assert(false && "Invalid return type");
     }
 }

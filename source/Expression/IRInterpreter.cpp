@@ -1642,7 +1642,7 @@ IRInterpreter::Interpret (llvm::Module &module,
                         exe_ctx.GetThreadRef(),
                         funcAddr,
                         *prototype,
-                        *returnType,
+                        returnType,
                         args,
                         options
                     )

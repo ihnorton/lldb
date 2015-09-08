@@ -706,7 +706,7 @@ DWARFCompileUnit::Index (const uint32_t cu_idx,
         const char *name = NULL;
         const char *mangled_cstr = NULL;
         bool is_declaration = false;
-        //bool is_artificial = false;
+        bool is_artificial = false;
         bool has_address = false;
         bool has_location = false;
         bool is_global_or_static_variable = false;
@@ -731,10 +731,10 @@ DWARFCompileUnit::Index (const uint32_t cu_idx,
                         is_declaration = form_value.Unsigned() != 0;
                     break;
 
-//                case DW_AT_artificial:
-//                    if (attributes.ExtractFormValueAtIndex(i, form_value))
-//                        is_artificial = form_value.Unsigned() != 0;
-//                    break;
+                case DW_AT_artificial:
+                    if (attributes.ExtractFormValueAtIndex(i, form_value))
+                        is_artificial = form_value.Unsigned() != 0;
+                    break;
 
                 case DW_AT_MIPS_linkage_name:
                 case DW_AT_linkage_name:

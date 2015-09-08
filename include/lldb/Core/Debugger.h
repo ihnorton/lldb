@@ -20,6 +20,7 @@
 #include "lldb/Core/IOHandler.h"
 #include "lldb/Core/Listener.h"
 #include "lldb/Core/SourceManager.h"
+#include "lldb/Core/StreamFile.h"
 #include "lldb/Core/UserID.h"
 #include "lldb/Core/UserSettingsController.h"
 #include "lldb/Host/HostThread.h"
@@ -108,8 +109,20 @@ public:
         return m_error_file_sp;
     }
 
-    
-    
+    lldb::StreamSP
+    GetOutputStream()
+    {
+        if (m_output_stream_sp)
+            return m_output_stream_sp;
+        else
+            return static_pointer_cast<Stream>(m_output_file_sp);
+    }
+
+    void SetOutputStream(lldb::StreamSP stream)
+    {
+        m_output_stream_sp = stream;
+    }
+
     void
     SetInputFileHandle (FILE *fh, bool tranfer_ownership);
 
@@ -418,6 +431,9 @@ protected:
     lldb::StreamFileSP m_input_file_sp;
     lldb::StreamFileSP m_output_file_sp;
     lldb::StreamFileSP m_error_file_sp;
+
+    lldb::StreamSP m_output_stream_sp;
+
     TerminalState m_terminal_state;
     TargetList m_target_list;
 

@@ -296,9 +296,14 @@ ThreadPlanStepInRange::ShouldStop (Event *event_ptr)
                 {
                     func_start_address.Slide (bytes_to_skip);
                     log = lldb_private::GetLogIfAllCategoriesSet (LIBLLDB_LOG_STEP);
-                    if (log)
-                        log->Printf ("Pushing past prologue ");
-                        
+                    if (log) {
+                        const char *frame_function_name = sc.GetFunctionName(Mangled::ePreferDemangledWithoutArguments).GetCString();
+                        if (frame_function_name)
+                            log->Printf ("Pushing past prologue of function %s", frame_function_name);
+                        else
+                            log->Printf ("Pushing past prologue ");
+                    }
+
                     m_sub_plan_sp = m_thread.QueueThreadPlanForRunToAddress(false, func_start_address,true);
                 }
             }

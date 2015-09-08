@@ -1256,11 +1256,13 @@ SymbolFileDWARF::ParseFunctionBlocks (const SymbolContext& sc,
                 int call_file = 0;
                 int call_line = 0;
                 int call_column = 0;
+                bool is_artificial = false;
                 if (die.GetDIENamesAndRanges (name,
                                               mangled_name,
                                               ranges,
                                               decl_file, decl_line, decl_column,
-                                              call_file, call_line, call_column, nullptr))
+                                              call_file, call_line, call_column,
+                                              is_artificial, nullptr))
                 {
                     if (tag == DW_TAG_subprogram)
                     {

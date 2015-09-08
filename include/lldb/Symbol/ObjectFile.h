@@ -322,6 +322,10 @@ public:
     GetByteSize () const
     { return m_length; }
 
+    virtual void
+    SetByteSize ( lldb::addr_t length )
+    { m_length = length; }
+
     //------------------------------------------------------------------
     /// Get accessor to the object file specification.
     ///

@@ -440,6 +440,12 @@ public:
         return m_range;
     }
 
+    bool
+    IsArtificial() const
+    {
+        return m_isArtificial;
+    }
+
     lldb::LanguageType
     GetLanguage() const;
     //------------------------------------------------------------------
@@ -666,6 +672,7 @@ protected:
     DWARFExpression m_frame_base;   ///< The frame base expression for variables that are relative to the frame pointer.
     Flags m_flags;
     uint32_t m_prologue_byte_size;  ///< Compute the prologue size once and cache it
+    bool m_isArtificial;            ///< The Function is marked as artificial
 private:
     DISALLOW_COPY_AND_ASSIGN(Function);
 };

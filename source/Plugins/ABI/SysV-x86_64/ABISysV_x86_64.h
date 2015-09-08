@@ -30,16 +30,24 @@ public:
     GetRedZoneSize () const;
 
     virtual bool
-    PrepareTrivialCall (lldb_private::Thread &thread, 
+    PrepareTrivialCall (lldb_private::Thread &thread,
                         lldb::addr_t sp,
                         lldb::addr_t functionAddress,
-                        lldb::addr_t returnAddress, 
+                        lldb::addr_t returnAddress,
                         llvm::ArrayRef<lldb::addr_t> args) const;
-    
+
+    virtual bool
+    PrepareTrivialCall (lldb_private::Thread &thread,
+                        lldb::addr_t sp,
+                        lldb::addr_t func_addr,
+                        lldb::addr_t return_addr,
+                        llvm::Type  &returntype,
+                        llvm::ArrayRef<ABI::CallArgument> args) const;
+
     virtual bool
     GetArgumentValues (lldb_private::Thread &thread,
                        lldb_private::ValueList &values) const;
-    
+
     virtual lldb_private::Error
     SetReturnValueObject(lldb::StackFrameSP &frame_sp, lldb::ValueObjectSP &new_value);
 
@@ -47,18 +55,18 @@ protected:
     lldb::ValueObjectSP
     GetReturnValueObjectSimple (lldb_private::Thread &thread,
                                 lldb_private::CompilerType &ast_type) const;
-    
-public:    
+
+public:
     virtual lldb::ValueObjectSP
     GetReturnValueObjectImpl (lldb_private::Thread &thread,
                           lldb_private::CompilerType &type) const;
 
     virtual bool
     CreateFunctionEntryUnwindPlan (lldb_private::UnwindPlan &unwind_plan);
-    
+
     virtual bool
     CreateDefaultUnwindPlan (lldb_private::UnwindPlan &unwind_plan);
-        
+
     virtual bool
     RegisterIsVolatile (const lldb_private::RegisterInfo *reg_info);
 
@@ -82,7 +90,7 @@ public:
             return false;   // Zero is not a valid stack address
         return true;
     }
-    
+
     virtual bool
     CodeAddressIsValid (lldb::addr_t pc)
     {
@@ -107,7 +115,7 @@ public:
 
     static lldb_private::ConstString
     GetPluginNameStatic();
-    
+
     //------------------------------------------------------------------
     // PluginInterface protocol
     //------------------------------------------------------------------

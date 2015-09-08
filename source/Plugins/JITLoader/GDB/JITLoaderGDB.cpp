@@ -275,10 +275,11 @@ JITLoaderGDB::ReadJITDescriptorImpl(bool all_entries)
             if (module_sp && module_sp->GetObjectFile())
             {
                 bool changed;
+                module_sp->GetObjectFile()->SetByteSize(symbolfile_size);
                 m_jit_objects.insert(std::make_pair(symbolfile_addr, module_sp));
+                ObjectFile *image_object_file = module_sp->GetObjectFile();
                 if (module_sp->GetObjectFile()->GetPluginName() == ConstString("mach-o"))
                 {
-                    ObjectFile *image_object_file = module_sp->GetObjectFile();
                     if (image_object_file)
                     {
                         const SectionList *section_list = image_object_file->GetSectionList ();
@@ -295,6 +296,19 @@ JITLoaderGDB::ReadJITDescriptorImpl(bool all_entries)
                 else
                 {
                     module_sp->SetLoadAddress(target, 0, true, changed);
+                    /*if (image_object_file)
+                    {
+                        const SectionList *section_list = image_object_file->GetSectionList ();
+                        const uint32_t num_sections = section_list->GetSize();
+                        for (uint32_t i = 0; i<num_sections; ++i)
+                        {
+                            SectionSP section_sp(section_list->GetSectionAtIndex(i));
+                            if (section_sp)
+                            {
+                                section_sp->SetFileAddress(0);
+                            }
+                        }
+                    }*/
                 }
 
                 // load the symbol table right away
@@ -379,8 +393,8 @@ JITLoaderGDB::CreateInstance(Process *process, bool force)
 {
     JITLoaderSP jit_loader_sp;
     ArchSpec arch (process->GetTarget().GetArchitecture());
-    if (arch.GetTriple().getVendor() != llvm::Triple::Apple)
-        jit_loader_sp.reset(new JITLoaderGDB(process));
+    //if (arch.GetTriple().getVendor() != llvm::Triple::Apple)
+    jit_loader_sp.reset(new JITLoaderGDB(process));
     return jit_loader_sp;
 }
 

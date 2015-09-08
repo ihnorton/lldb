@@ -532,6 +532,15 @@ ObjectFile::ReadSectionData (const Section *section, DataExtractor& section_data
                     section_data.SetAddressByteSize (process_sp->GetAddressByteSize());
                     return section_data.GetByteSize();
                 }
+            } else {
+                DataBufferSP data_sp (ReadMemory (process_sp, m_memory_addr + section->GetFileOffset(), section->GetFileSize()));
+                if (data_sp)
+                {
+                    section_data.SetData (data_sp, 0, data_sp->GetByteSize());
+                    section_data.SetByteOrder (process_sp->GetByteOrder());
+                    section_data.SetAddressByteSize (process_sp->GetAddressByteSize());
+                    return section_data.GetByteSize();
+                }
             }
         }
     }

@@ -1037,6 +1037,12 @@ Breakpoint::BreakpointEventData::GetBreakpoint ()
     return m_new_breakpoint_sp;
 }
 
+BreakpointSP
+Breakpoint::BreakpointEventData::GetBreakpoint () const
+{
+    return m_new_breakpoint_sp;
+}
+
 BreakpointEventType
 Breakpoint::BreakpointEventData::GetBreakpointEventType () const
 {

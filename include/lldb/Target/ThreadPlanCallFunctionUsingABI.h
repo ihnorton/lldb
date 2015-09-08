@@ -34,7 +34,14 @@ public:
     ThreadPlanCallFunctionUsingABI (Thread &thread,
                                  const Address &function_address,
                                  llvm::Type &function_prototype,
-                                 llvm::Type &return_type,
+                                 llvm::Type *return_type,
+                                 llvm::ArrayRef<ABI::CallArgument> args,
+                                 const EvaluateExpressionOptions &options);
+
+    ThreadPlanCallFunctionUsingABI (Thread &thread,
+                                 const Address &function_address,
+                                 llvm::Type &function_prototype,
+                                 CompilerType return_type,
                                  llvm::ArrayRef<ABI::CallArgument> args,
                                  const EvaluateExpressionOptions &options);
 
@@ -49,7 +56,8 @@ protected:
 
 
 private:
-    llvm::Type                                     &m_return_type;
+    llvm::Type                                     *m_return_type;
+    CompilerType                                    m_clang_return_type;
     DISALLOW_COPY_AND_ASSIGN (ThreadPlanCallFunctionUsingABI);
 };
 

@@ -245,6 +245,7 @@ public:
                           int& call_file,
                           int& call_line,
                           int& call_column,
+                          bool& is_artificial,
                           lldb_private::DWARFExpression *frame_base) const;
 
     //----------------------------------------------------------------------

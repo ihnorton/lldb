@@ -49,7 +49,7 @@ public:
     GetBytes() const;
 
     size_t
-    GetByteSize();
+    GetByteSize() const;
 
     bool
     IsValid () const;

@@ -922,7 +922,7 @@ Debugger::IsTopIOHandler (const lldb::IOHandlerSP& reader_sp)
 void
 Debugger::PrintAsync (const char *s, size_t len, bool is_stdout)
 {
-    lldb::StreamFileSP stream = is_stdout ? GetOutputFile() : GetErrorFile();
+    lldb::StreamSP stream = is_stdout ? GetOutputStream() : GetErrorFile();
     m_input_reader_stack.PrintAsync(stream.get(), s, len);
 }
 

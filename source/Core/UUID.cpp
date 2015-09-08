@@ -136,7 +136,7 @@ UUID::SetBytes (const void *uuid_bytes, uint32_t num_uuid_bytes)
 }
 
 size_t
-UUID::GetByteSize()
+UUID::GetByteSize() const
 {
     return m_num_uuid_bytes;
 }

@@ -2215,6 +2215,7 @@ DWARFASTParserClang::ParseFunctionFromDWARF (const SymbolContext& sc,
     int call_file = 0;
     int call_line = 0;
     int call_column = 0;
+    bool is_artificial = false;
     DWARFExpression frame_base(die.GetCU());
 
     const dw_tag_t tag = die.Tag();
@@ -2231,6 +2232,7 @@ DWARFASTParserClang::ParseFunctionFromDWARF (const SymbolContext& sc,
                                   call_file,
                                   call_line,
                                   call_column,
+                                  is_artificial,
                                   &frame_base))
     {
 
