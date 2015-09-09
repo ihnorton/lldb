@@ -36,6 +36,7 @@ class DynamicLibrary;
 }
 }
 
+class JuliaEventHandler;
 namespace lldb_private {
 
 //----------------------------------------------------------------------
@@ -53,6 +54,7 @@ class Debugger :
     public BroadcasterManager
 {
 friend class SourceManager;  // For GetSourceFileCache.
+friend class ::JuliaEventHandler;
 
 public:
 
@@ -465,12 +467,11 @@ protected:
         eBroadcastBitEventThreadIsListening   = (1 << 0),
     };
 
-private:
-
     // Use Debugger::CreateInstance() to get a shared pointer to a new
     // debugger object
     Debugger (lldb::LogOutputCallback m_log_callback, void *baton);
 
+private:
     DISALLOW_COPY_AND_ASSIGN (Debugger);
     
 };
