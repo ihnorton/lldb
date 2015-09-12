@@ -93,7 +93,7 @@ int inline snprintf(char *buffer, size_t count, const char *format, ...)
 
 // timespec
 // MSVC 2015 and higher have timespec.  Otherwise we need to define it ourselves.
-#if defined(_MSC_VER) && _MSC_VER >= 1900
+#if defined(_MSC_VER) && _MSC_VER >= 1900 || defined(__MINGW32__)
 #include <time.h>
 #else
 struct timespec
