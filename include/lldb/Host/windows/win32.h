@@ -14,9 +14,11 @@
 #include <time.h>
 
 // posix utilities
+#ifndef __MINGW32__
 int vasprintf(char **ret, const char *fmt, va_list ap);
 char * strcasestr(const char *s, const char* find);
 char* realpath(const char * name, char * resolved);
+#endif
 
 #ifndef PATH_MAX
 #define PATH_MAX 32768
