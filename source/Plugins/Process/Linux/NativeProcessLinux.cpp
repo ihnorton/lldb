@@ -18,6 +18,9 @@
 // C++ Includes
 #include <fstream>
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
+
 #include <sstream>
 #include <string>
 #include <unordered_map>

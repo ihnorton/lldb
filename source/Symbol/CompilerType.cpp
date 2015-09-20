@@ -27,6 +27,8 @@
 
 #include <iterator>
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 using namespace lldb;
 using namespace lldb_private;

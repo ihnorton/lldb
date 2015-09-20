@@ -21,6 +21,9 @@
 #include <stdio.h>
 
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
+
 #include <string>
 
 #include "lldb/API/SBValue.h"

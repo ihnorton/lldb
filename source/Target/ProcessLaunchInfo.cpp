@@ -359,7 +359,7 @@ ProcessLaunchInfo::FinalizeFileActions (Target *target, bool default_to_use_pty)
                                  __FUNCTION__);
 
                 int open_flags = O_RDWR | O_NOCTTY;
-#if !defined(_MSC_VER)
+#if !defined(_MSC_VER) && !defined(__MINGW32__)
                 // We really shouldn't be specifying platform specific flags
                 // that are intended for a system call in generic code.  But
                 // this will have to do for now.

@@ -14,6 +14,9 @@
 // C++ Includes
 #include <list>
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
+
 #include <set>
 #include <vector>
 

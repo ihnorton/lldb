@@ -20,6 +20,9 @@
 #include <grp.h>
 #include <limits.h>
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
+
 #include <netdb.h>
 #include <pwd.h>
 #include <sys/types.h>

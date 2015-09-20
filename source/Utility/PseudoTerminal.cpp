@@ -20,7 +20,9 @@
 
 #ifdef _WIN32
 #include "lldb/Host/windows/win32.h"
+#ifndef __MINGW32__
 typedef uint32_t pid_t;
+#endif
 // empty functions
 int posix_openpt(int flag) { return 0; }
 

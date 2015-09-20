@@ -24,6 +24,8 @@
 
 #include <thread>
 #include <mutex> // std::once
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 using namespace lldb;
 using namespace lldb_private;

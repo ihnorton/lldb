@@ -47,7 +47,11 @@ static const char *_prompt = "(lldb) ";
 static char *
 el_get_s (char *buffer, int chars)
 {
+#ifdef __MINGW32__
+    return fgets(buffer,chars,stdin);
+#else
     return gets_s(buffer, chars);
+#endif
 }
 #else
 

@@ -14,6 +14,8 @@
 
 // C++ Includes
 #include <mutex> // std::once
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 // Other libraries and framework includes
 // Project includes

@@ -13,6 +13,7 @@
 
 #include "lldb/lldb-types.h"
 #include <assert.h>
+#include <mutex>
 
 #ifdef LLDB_CONFIGURATION_DEBUG
 #include <string>

@@ -16,6 +16,8 @@
 #include "lldb/Interpreter/CommandInterpreter.h"
 
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 using namespace lldb;
 using namespace lldb_private;

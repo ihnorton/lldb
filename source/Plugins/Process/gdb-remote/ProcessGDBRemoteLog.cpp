@@ -10,6 +10,8 @@
 #include "ProcessGDBRemoteLog.h"
 
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 #include "lldb/Interpreter/Args.h"
 #include "lldb/Core/StreamFile.h"

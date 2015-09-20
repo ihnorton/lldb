@@ -27,6 +27,7 @@ extern "C"
     int _chdir(const char *path);
 }
 
+#ifndef __MINGW32__
 int vasprintf(char **ret, const char *fmt, va_list ap)
 {
     char *buf;
@@ -53,6 +54,7 @@ int vasprintf(char **ret, const char *fmt, va_list ap)
     va_end(ap2);
     return len;
 }
+#endif // __MINGW32__
 
 char* strcasestr(const char *s, const char* find)
 {

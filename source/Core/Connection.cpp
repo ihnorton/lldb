@@ -15,9 +15,10 @@
 
 #if defined(_WIN32)
 #include "lldb/Host/windows/ConnectionGenericFileWindows.h"
+#else
+#include "lldb/Host/ConnectionFileDescriptor.h"
 #endif
 
-#include "lldb/Host/ConnectionFileDescriptor.h"
 
 using namespace lldb_private;
 
@@ -35,6 +36,7 @@ Connection::CreateDefaultConnection(const char *url)
 #if defined(_WIN32)
     if (strstr(url, "file://") == url)
         return new ConnectionGenericFile();
-#endif
+#else
     return new ConnectionFileDescriptor();
+#endif
 }

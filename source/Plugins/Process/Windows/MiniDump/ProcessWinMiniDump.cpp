@@ -16,6 +16,8 @@
 #include <stdlib.h>
 
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 #include "lldb/Core/PluginManager.h"
 #include "lldb/Core/Module.h"

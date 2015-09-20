@@ -12,6 +12,8 @@
 #include "llvm/ADT/StringMap.h"
 
 #include <mutex> // std::once
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 using namespace lldb_private;
 

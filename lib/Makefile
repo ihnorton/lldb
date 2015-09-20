@@ -66,8 +66,6 @@ USEDLIBS = lldbAPI.a \
 	lldbPluginSymbolVendorELF.a \
 	lldbPluginObjectFilePECOFF.a \
 	lldbPluginOSPython.a \
-	lldbPluginPlatformGDB.a \
-	lldbPluginProcessGDBRemote.a \
 	lldbPluginSymbolFileDWARF.a \
 	lldbPluginSymbolFileSymtab.a \
 	lldbPluginSystemRuntimeMacOSX.a \
@@ -96,9 +94,11 @@ USEDLIBS = lldbAPI.a \
 	lldbPluginPlatformFreeBSD.a \
 	lldbPluginPlatformPOSIX.a \
 	lldbPluginPlatformKalimba.a \
-	lldbPluginPlatformAndroid.a \
 	lldbPluginScriptInterpreterNone.a \
 	lldbPluginScriptInterpreterPython.a
+#	lldbPluginPlatformGDB.a \
+#	lldbPluginProcessGDBRemote.a \
+#	lldbPluginPlatformAndroid.a 
 
 # Because GCC requires RTTI enabled for lldbCore (see source/Core/Makefile) it is
 # necessary to also link the clang rewriter libraries so vtable references can

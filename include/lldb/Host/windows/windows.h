@@ -23,6 +23,7 @@
 #undef near
 #undef FAR
 #undef NEAR
+#undef PSRWLOCK
 #define FAR
 #define NEAR
 

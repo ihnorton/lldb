@@ -10,6 +10,8 @@
 #include <functional>
 #include <map>
 #include <mutex>
+#include "lldb/Host/windows/mingw.thread.h"
+#include "lldb/Host/windows/mingw.mutex.h"
 
 #include "lldb/Target/Language.h"
 

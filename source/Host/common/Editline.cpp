@@ -6,7 +6,7 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-
+#ifndef LLDB_DISABLE_LIBEDIT
 #include <iomanip>
 #include <iostream>
 #include <limits.h>
@@ -1425,3 +1425,5 @@ Editline::PrintAsync (Stream *stream, const char *s, size_t len)
         MoveCursor(CursorLocation::BlockEnd, CursorLocation::EditingCursor);
     }
 }
+
+#endif // #ifndef LLDB_DISABLE_LIBEDIT

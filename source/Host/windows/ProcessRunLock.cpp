@@ -1,6 +1,7 @@
 #include "lldb/Host/ProcessRunLock.h"
 #include "lldb/Host/windows/windows.h"
 
+/*
 namespace
 {
 #if defined(__MINGW32__)
@@ -13,7 +14,7 @@ typedef struct _RTL_SRWLOCK {
 typedef RTL_SRWLOCK SRWLOCK, *PSRWLOCK;
 #endif
 }
-
+*/
 
 static PSRWLOCK GetLock(lldb::rwlock_t lock)
 {

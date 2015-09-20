@@ -34,4 +34,5 @@ LLDB_REPOSITORY := $(strip \
         $(shell $(LLVM_SRC_ROOT)/utils/GetRepositoryPath $(LLVM_SRC_ROOT)/tools/lldb))
 
 CPP.Defines += -DLLDB_REVISION='"$(LLDB_REVISION)"' -DLLDB_REPOSITORY='"$(LLDB_REPOSITORY)"'
+
 endif
